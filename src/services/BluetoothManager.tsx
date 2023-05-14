@@ -3,8 +3,24 @@ import { View, Text, PermissionsAndroid } from "react-native";
 import BleManager from "react-native-ble-manager";
 import sheet from "../styles/sheet";
 
+interface IDevices {
+  id: string;
+  name?: string;
+  rssi?: number;
+  advertisement?: {
+    localName?: string;
+    manufacturerData?: string;
+    serviceData?: {
+      uuid: string;
+      data: string;
+    }[];
+    serviceUuids?: string[];
+    txPowerLevel?: number;
+  };
+}
+
 const BluetoothManager = () => {
-  const [devices, setDevices] = useState([]);
+  const [devices, setDevices] = useState<IDevices[]>([]);
 
   useEffect(() => {
     BleManager.start({ showAlert: false })
@@ -31,10 +47,11 @@ const BluetoothManager = () => {
           console.log("Location permission granted");
 
           BleManager.scan([], 5, true)
-            .then((results) => {
+            .then((results: any) => {
               console.log("Scanning...");
-              setDevices(results);
+              console.log(results);
               console.log(devices);
+              setDevices(results);
             })
             .catch((error) => {
               console.log("Error:", error);

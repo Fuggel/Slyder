@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   Switch,
+  Alert,
 } from "react-native";
 import Slider from "@react-native-community/slider";
 import FeatherIcon from "react-native-vector-icons/Feather";
@@ -14,12 +15,12 @@ import { SECTIONS } from "../utils/settings.utils";
 import sheet from "../styles/sheet";
 
 const SettingsComponent = () => {
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{ [key: string]: boolean }>({
     darkMode: appSettings.darkMode,
     wifi: appSettings.wifi,
   });
 
-  const handleSwitchChange = (id) => {
+  const handleSwitchChange = (id: string) => {
     const newForm = { ...form, [id]: !form[id] };
     setForm(newForm);
   };
@@ -49,7 +50,7 @@ const SettingsComponent = () => {
                     <TouchableOpacity
                       key={index}
                       onPress={() => {
-                        alert(label);
+                        Alert.alert(label);
                       }}
                     >
                       <View style={sheet.settingsRow}>
@@ -57,7 +58,7 @@ const SettingsComponent = () => {
                           color="#616161"
                           name={icon}
                           style={sheet.settingsRowIcon}
-                          size={22}
+                          size={appSettings.iconSmall}
                         />
                         <Text style={sheet.settingsRowLabel}>{label}</Text>
                         <View style={sheet.settingsRowSpacer} />
@@ -75,17 +76,20 @@ const SettingsComponent = () => {
                           <Switch
                             onChange={() => handleSwitchChange(id)}
                             value={form[id]}
-                            trackLabel={{ false: "Off", true: "On" }}
                           />
                         )}
                         {type === "play" && (
-                          <FeatherIcon color="#ababab" name="play" size={22} />
+                          <FeatherIcon
+                            color="#ababab"
+                            name="play"
+                            size={appSettings.iconSmall}
+                          />
                         )}
-                        {(type === "select" || type === "link") && (
+                        {type === "link" && (
                           <FeatherIcon
                             color="#ababab"
                             name="chevron-right"
-                            size={28}
+                            size={appSettings.iconBig}
                           />
                         )}
                       </View>
