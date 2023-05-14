@@ -1,4 +1,14 @@
-export const SECTIONS = [
+interface ISection {
+  header: string;
+  items: {
+    id: string;
+    icon: string;
+    label: string;
+    type: "range" | "toggle" | "link" | "play";
+  }[];
+}
+
+export const SECTIONS: ISection[] = [
   {
     header: "Video Shot",
     items: [
