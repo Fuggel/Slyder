@@ -51,8 +51,8 @@ const BluetoothManager = () => {
   }, [devices]);
 
   return (
-    <View style={sheet.container}>
-      <Text style={sheet.title}>BLE Devices:</Text>
+    <View style={sheet.bleContainer}>
+      <Text style={sheet.bleTitle}>BLE Devices:</Text>
       {devices &&
         devices.map((device, index) => (
           <Text key={index}>{device.name || "Unknown Device"}</Text>
